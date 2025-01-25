@@ -6,6 +6,10 @@ This leads to a better understanding on how flat maps are deformed in order to f
 ![](bin/images/1.png)
 ![](bin/images/2.png)
 
+## Controls
+
+Arrows to look arround and Space and Lshift to zoom out and in respectively.
+
 ## Building
 
 on LINUX and MACOS
