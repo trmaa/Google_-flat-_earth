@@ -14,7 +14,7 @@ namespace gfe {
 		std::string m_shader_path;
 		sf::RectangleShape m_output;
 
-		sf::Font m_font;  // Store font as a member variable
+		sf::Font m_font;
 		sf::Text m_title;
 
 	public:
@@ -25,14 +25,14 @@ namespace gfe {
 			create(sf::VideoMode(width, height), "Google flat earth", sf::Style::Close);
 			setPosition(position);
 
-			m_input_buffer.loadFromFile("bin/maps/map1.jpg");
+			m_input_buffer.loadFromFile("bin/maps/map0.jpg");
 			m_output.setSize(sf::Vector2f(width, height));
 
 			m_shader.loadFromFile(m_shader_path, sf::Shader::Fragment);
 			m_shader.setUniform("resolution", sf::Vector2f(width, height));
 			m_shader.setUniform("texture", m_input_buffer);
 
-			m_font.loadFromFile("bin/fonts/pixelmix.ttf");  // Font loading moved here
+			m_font.loadFromFile("bin/fonts/pixelmix.ttf");
 			m_title.setFont(m_font);
 			m_title.setString(title);
 			m_title.setPosition(sf::Vector2f(10.f, 10.f));
