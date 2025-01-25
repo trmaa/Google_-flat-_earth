@@ -28,7 +28,7 @@ namespace gfe {
 			create(sf::VideoMode(width, height), "Google flat earth", sf::Style::Close);
 			setPosition(position);
 
-			m_input_buffer.loadFromFile("bin/maps/map0.jpg");
+			m_input_buffer.loadFromFile("bin/maps/map1.jpg");
 			m_output.setSize(sf::Vector2f(width, height));
 
 			m_shader.loadFromFile(m_shader_path, sf::Shader::Fragment);
