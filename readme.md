@@ -12,6 +12,7 @@ This leads to a better understanding on how flat maps are deformed in order to f
 ## Controls
 
 Arrows to look arround and Space and Lshift to zoom out and in respectively.
+Tab to hotreload the map, which must be .jpg.
 
 ## Building
 
