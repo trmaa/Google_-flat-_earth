@@ -10,7 +10,7 @@ This leads to a better understanding on how flat maps are deformed in order to f
 
 on LINUX and MACOS
 
-Unzip the .DEPENDENCIES.zip file onto the root. Then run `./build`.
+Unzip the DEPENDENCIES.zip (from the release) file onto the root. Then run `./build`.
 
 on WINDOWS
 
