@@ -1,16 +1,14 @@
 #include <SFML/Graphics.hpp>
+#include "window.hpp"
+#include "camera.hpp"
+
+gfe::Camera camera;
+gfe::Window window;
 
 int main() {
-	sf::RenderWindow window;
-	window.create(sf::VideoMode(800, 600), "Flat Earth", sf::Style::None);
-
-	sf::Text text;
-	text.setString("Hello world");
-	sf::Font font;
-	font.loadFromFile("bin/fonts/pixelmix.ttf");
-	text.setFont(font);
-	text.setPosition(100, 100);
-
+	sf::Clock clock;
+	sf::Time elapsed;
+	float delta_time;
 	while (window.isOpen()) {
 		sf::Event event;
 		while (window.pollEvent(event)) {
@@ -18,9 +16,10 @@ int main() {
 				window.close();
 			}
 		}
+		elapsed = clock.restart();
+		delta_time = elapsed.asSeconds();
 
-		window.clear();
-		window.draw(text);
-		window.display();
+		camera.move(delta_time);
+		window.render(camera);
 	}
 }
