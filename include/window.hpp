@@ -44,6 +44,7 @@ namespace gfe {
 			clear();
 
 			m_shader.setUniform("camera_angle", camera.get_angle((sf::Vector2f)getSize()));
+			m_shader.setUniform("FAR", camera.get_FAR());
 			draw(m_output, &m_shader);
 
 			draw(m_title);

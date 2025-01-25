@@ -1,6 +1,6 @@
 #version 330
 
-#define FAR 1
+uniform float FAR;
 
 uniform vec2 resolution;
 uniform sampler2D texture;
