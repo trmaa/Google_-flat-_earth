@@ -5,6 +5,9 @@ This leads to a better understanding on how flat maps are deformed in order to f
 
 ![](bin/images/1.png)
 ![](bin/images/2.png)
+![](bin/images/3.png)
+![](bin/images/4.png)
+![](bin/images/5.png)
 
 ## Controls
 

@@ -39,5 +39,5 @@ void main() {
     sphere_angular_coords = rotate_sphere(sphere_angular_coords, camera_angle);
     uv = sphere_to_uv(sphere_angular_coords);
 
-    gl_FragColor = texture2D(texture, uv);
+    gl_FragColor = vec4(texture2D(texture, uv).rgb, 1.0);
 }
