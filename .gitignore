@@ -1,4 +1,5 @@
 compile_commands.json
+.DEPENDENCIES_LINUX.zip
 lib/
 include/SFML/
 include/glm/
