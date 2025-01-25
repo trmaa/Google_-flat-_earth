@@ -5,6 +5,7 @@
 #include <cstdlib>
 #include <string>
 #include <dirent.h>
+#include "SFML/Graphics/Text.hpp"
 #include "camera.hpp"
 
 namespace gfe {
@@ -35,12 +36,12 @@ namespace gfe {
 			m_shader.setUniform("resolution", sf::Vector2f(width, height));
 			m_shader.setUniform("texture", m_input_buffer);
 
-			m_font.loadFromFile("bin/fonts/pixelmix.ttf");
+			m_font.loadFromFile("bin/fonts/comicsans.otf");
 			m_title.setFont(m_font);
 			m_title.setString(title);
 			m_title.setPosition(sf::Vector2f(10.f, 10.f));
-			m_title.setCharacterSize(21);
-			m_title.setFillColor(sf::Color(255, 100, 0));
+			m_title.setCharacterSize(25);
+			m_title.setFillColor(sf::Color(255, 50, 255));
 		}
 	private:
 		void m_update_map() {
@@ -73,7 +74,7 @@ namespace gfe {
 		}
 
 	public:
-		void render(const gfe::Camera& camera) {
+		void render(const gfe::Camera& camera, const float& delta_time) {
 #if HOT_RELOAD
 			m_update_map();
 			m_input_buffer.loadFromFile("bin/maps/map" + std::to_string(m_map_index) + ".jpg");
@@ -86,6 +87,14 @@ namespace gfe {
 			draw(m_output, &m_shader);
 
 			draw(m_title);
+
+			sf::Text fps;
+			fps.setFont(m_font);
+			fps.setString("fps: "+std::to_string((int)(1.f/delta_time)));
+			fps.setPosition(sf::Vector2f(10.f, 40.f));
+			fps.setCharacterSize(25);
+			fps.setFillColor(sf::Color(255, 50, 255));
+			draw(fps);
 
 			display();
 		}

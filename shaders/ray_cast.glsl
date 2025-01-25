@@ -6,20 +6,11 @@ uniform vec2 resolution;
 uniform sampler2D texture;
 uniform vec2 camera_angle;
 
-struct Ray {
-    vec3 origin;
-    vec3 direction;
-};
-
-Ray create_ray(vec2 camera_angle, vec2 ray_id) {
-    camera_angle.x += 3.14159 / 2.0;
-
-    vec3 camera_space_direction = normalize(vec3(ray_id.x, ray_id.y, -FAR));
-
-    float cos_pitch = cos(camera_angle.y);
-    float sin_pitch = sin(camera_angle.y);
-    float cos_yaw = cos(-camera_angle.x);
-    float sin_yaw = sin(-camera_angle.x);
+mat3 angle2_to_vector3_matrix(vec2 angle2) {
+    float cos_pitch = cos(angle2.y);
+    float sin_pitch = sin(angle2.y);
+    float cos_yaw = cos(-angle2.x);
+    float sin_yaw = sin(-angle2.x);
 
     mat3 R_x = mat3(
         1, 0, 0,
@@ -35,9 +26,22 @@ Ray create_ray(vec2 camera_angle, vec2 ray_id) {
 
     mat3 R = R_y * R_x;
 
-    vec3 ray_origin = R * vec3(0, 0, FAR * 1.7);
+    return R;
+}
 
-    vec3 ray_direction = normalize(R * camera_space_direction);
+struct Ray {
+    vec3 origin;
+    vec3 direction;
+};
+
+Ray create_ray(vec2 camera_angle, vec2 ray_id) {
+    camera_angle.x += 3.14159 / 2.0;
+
+    vec3 camera_space_direction = normalize(vec3(ray_id.x, ray_id.y, -FAR));
+
+    vec3 ray_origin = angle2_to_vector3_matrix(camera_angle) * vec3(0.0, 0.0, FAR * 1.7);
+
+    vec3 ray_direction = normalize(angle2_to_vector3_matrix(camera_angle) * camera_space_direction);
 
     Ray ray;
     ray.origin = ray_origin;
@@ -94,6 +98,7 @@ void main() {
         vec3 hit_point = ray_at(ray, t);  
         vec3 normal = normalize(hit_point);  
         color = color_at(normal);  
+        //color *= dot(normal, normalize(ray.origin))*3 - 2;
     }
 
     gl_FragColor = vec4(color, 1.0);

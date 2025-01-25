@@ -26,7 +26,7 @@ int main() {
 		delta_time = elapsed.asSeconds();
 
 		camera.move(delta_time);
-		flat_map_window.render(camera);
-		spherical_map_window.render(camera);
+		flat_map_window.render(camera, delta_time);
+		spherical_map_window.render(camera, delta_time);
 	}
 }
