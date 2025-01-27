@@ -1,7 +1,6 @@
 #ifndef CAMERA_H
 #define CAMERA_H
 
-#include "SFML/Window/Keyboard.hpp"
 #include <SFML/Graphics.hpp>
 #include <cmath>
 #include <glm/glm.hpp>
@@ -48,8 +47,8 @@ namespace gfe {
 				m_FAR += 0.01f;
 			}
 
-			if (m_FAR < 0.1f) {
-				m_FAR = 0.1f;
+			if (m_FAR < 1.f) {
+				m_FAR = 1.f;
 			}
 			if (m_FAR > 10.f) {
 				m_FAR = 10.f;

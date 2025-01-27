@@ -4,13 +4,14 @@
 #include "window.hpp"
 #include "camera.hpp"
 
-gfe::Camera camera;
-
-int gfe::Window::m_map_index = 0;
-gfe::Window spherical_map_window("shaders/ray_cast.glsl", sf::Vector2i(0.f, 720.f/1.5f), "3D view");
-gfe::Window flat_map_window("shaders/transform.glsl", sf::Vector2i(0.f, 0.f), "Flat view");
+int gfe::Window::m_map_index = 1;
 
 int main() {
+	gfe::Camera camera;
+
+	gfe::Window spherical_map_window("shaders/ray_cast.glsl", sf::Vector2i(0.f, 720.f/1.5f), "3D view");
+	gfe::Window flat_map_window("shaders/transform.glsl", sf::Vector2i(0.f, 0.f), "Flat view");
+
 	sf::Clock clock;
 	sf::Time elapsed;
 	float delta_time;
