@@ -1,5 +1,5 @@
 #!/bin/bash
 
-g++ src/**.cpp -o google_flat_earth.app -Iinclude/ -Llib/ -lsfml-system -lsfml-window -lsfml-graphics
+g++ src/**.cpp -o google_flat_earth.app -Iinclude/ -Llib/ -Wl,-rpath,'$ORIGIN/lib' -lsfml-system -lsfml-window -lsfml-graphics
 
 ./google_flat_earth.app
