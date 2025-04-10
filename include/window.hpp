@@ -9,96 +9,96 @@
 #include "camera.hpp"
 
 namespace gfe {
-	class Window: public sf::RenderWindow {
-	private:
-		sf::Texture m_input_buffer;
-		sf::Shader m_shader;
-		std::string m_shader_path;
-		sf::RectangleShape m_output;
+class Window: public sf::RenderWindow {
+private:
+    sf::Texture m_input_buffer;
+    sf::Shader m_shader;
+    std::string m_shader_path;
+    sf::RectangleShape m_output;
 
-		sf::Font m_font;
-		sf::Text m_title;
+    sf::Font m_font;
+    sf::Text m_title;
 
-		static int m_map_index;
+    static int m_map_index;
 
-	public:
-		Window(const std::string& path, sf::Vector2i position, const std::string& title = "")
-			: m_shader_path(path) {
-			const int width = 1280 / 1.5f;
-			const int height = 720 / 1.5f;
-			create(sf::VideoMode(width, height), "Google flat earth", sf::Style::Close);
-			setPosition(position);
+public:
+    Window(const std::string& path, sf::Vector2i position, const std::string& title = "")
+	: m_shader_path(path) {
+	const int width = 1280 / 1.5f;
+	const int height = 720 / 1.5f;
+	create(sf::VideoMode(width, height), "Google flat earth", sf::Style::Close);
+	setPosition(position);
 
-			m_input_buffer.loadFromFile("bin/maps/map1.jpg");
-			m_output.setSize(sf::Vector2f(width, height));
+	m_input_buffer.loadFromFile("bin/maps/map1.jpg");
+	m_output.setSize(sf::Vector2f(width, height));
 
-			m_shader.loadFromFile(m_shader_path, sf::Shader::Fragment);
-			m_shader.setUniform("resolution", sf::Vector2f(width, height));
-			m_shader.setUniform("texture", m_input_buffer);
+	m_shader.loadFromFile(m_shader_path, sf::Shader::Fragment);
+	m_shader.setUniform("resolution", sf::Vector2f(width, height));
+	m_shader.setUniform("texture", m_input_buffer);
 
-			m_font.loadFromFile("bin/fonts/comicsans.otf");
-			m_title.setFont(m_font);
-			m_title.setString(title);
-			m_title.setPosition(sf::Vector2f(10.f, 10.f));
-			m_title.setCharacterSize(25);
-			m_title.setFillColor(sf::Color(255, 50, 255));
-		}
-	private:
-		void m_update_map() {
-			static bool tab_pressed = false;
+	m_font.loadFromFile("bin/fonts/comicsans.otf");
+	m_title.setFont(m_font);
+	m_title.setString(title);
+	m_title.setPosition(sf::Vector2f(10.f, 10.f));
+	m_title.setCharacterSize(25);
+	m_title.setFillColor(sf::Color(255, 50, 255));
+    }
+private:
+    void m_update_map() {
+	static bool tab_pressed = false;
 
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Tab)) {
-				if (!tab_pressed) {
-					tab_pressed = true;
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Tab)) {
+	    if (!tab_pressed) {
+		tab_pressed = true;
 
-					int count = 0;
-					DIR* dir = opendir("bin/maps/");
-					if (dir) {
-						struct dirent* entry;
-						while ((entry = readdir(dir)) != nullptr) {
-							if (entry->d_type == DT_REG) {
-								++count;
-							}
-						}
-						closedir(dir);
-					}
-
-					m_map_index += 1;
-					if (m_map_index >= count) {
-						m_map_index = 0;
-					}
-				}
-			} else {
-				tab_pressed = false;
+		int count = 0;
+		DIR* dir = opendir("bin/maps/");
+		if (dir) {
+		    struct dirent* entry;
+		    while ((entry = readdir(dir)) != nullptr) {
+			if (entry->d_type == DT_REG) {
+			    ++count;
 			}
+		    }
+		    closedir(dir);
 		}
 
-	public:
-		void render(const gfe::Camera& camera, const float& delta_time) {
+		m_map_index += 1;
+		if (m_map_index >= count) {
+		    m_map_index = 0;
+		}
+	    }
+	} else {
+	    tab_pressed = false;
+	}
+    }
+
+public:
+    void render(const gfe::Camera& camera, const float& delta_time) {
 #if HOT_RELOAD
-			m_update_map();
-			m_input_buffer.loadFromFile("bin/maps/map" + std::to_string(m_map_index) + ".jpg");
-			m_shader.setUniform("texture", m_input_buffer);
+	m_update_map();
+	m_input_buffer.loadFromFile("bin/maps/map" + std::to_string(m_map_index) + ".jpg");
+	m_shader.setUniform("texture", m_input_buffer);
 #endif
-			clear();
+	clear();
 
-			m_shader.setUniform("camera_angle", camera.get_angle((sf::Vector2f)getSize()));
-			m_shader.setUniform("FAR", camera.get_FAR());
-			draw(m_output, &m_shader);
+	m_shader.setUniform("camera_angle", camera.get_angle((sf::Vector2f)getSize()));
+	m_shader.setUniform("FAR", camera.get_FAR());
+	draw(m_output, &m_shader);
 
-			draw(m_title);
+	draw(m_title);
 
-			sf::Text fps;
-			fps.setFont(m_font);
-			fps.setString("fps: "+std::to_string((int)(1.f/delta_time)));
-			fps.setPosition(sf::Vector2f(10.f, 40.f));
-			fps.setCharacterSize(25);
-			fps.setFillColor(sf::Color(255, 50, 255));
-			draw(fps);
+	sf::Text fps;
+	fps.setFont(m_font);
+	fps.setString("fps: "+std::to_string((int)(1.f/delta_time)));
+	fps.setPosition(sf::Vector2f(10.f, 40.f));
+	fps.setCharacterSize(25);
+	fps.setFillColor(sf::Color(255, 50, 255));
+	draw(fps);
 
-			display();
-		}
-	};
+	display();
+    }
+};
 }
 
 #endif
